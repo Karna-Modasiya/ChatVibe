@@ -65,3 +65,4 @@ yarn-error.log
 # testing
 /coverage
 grafbase/.env
+android/app/google-services.json
