@@ -66,3 +66,4 @@ yarn-error.log
 /coverage
 grafbase/.env
 android/app/google-services.json
+android/app/src/main/res/values/string1.xml

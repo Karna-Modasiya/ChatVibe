@@ -8,11 +8,13 @@ import Colors from '../constants/Colors';
 import SocialLogin from '../components/SocialAuthProvider';
 import auth from '@react-native-firebase/auth';
 import Background from '../components/Background';
+import { useAuth } from '../utils/AuthContext';
 
 const Login = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
+  const {setAuthType} = useAuth();
 
   const validate = async () => {
     Keyboard.dismiss();
@@ -41,6 +43,7 @@ const Login = ({ navigation }) => {
             .signInWithEmailAndPassword(inputs.email, inputs.password)
             .then(() => {
                 setLoading(false);
+                setAuthType("email");
                 console.log('User Logged In!');
             })
             .catch(error => {

@@ -12,15 +12,18 @@ export function useAuth() {
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentUser,setCurrentUser] = useState({});
+    const [authType,setAuthType] = useState(null);
     
     // Handle user state changes
     function onAuthStateChanged(user) {
         setIsLoggedIn(user);
+        setAuthType(null);
         setCurrentUser(user);
     }
 
     function logout()
     {
+        GoogleSignin.signOut()
         auth()
             .signOut()
             .then(() => console.log('User signed out!'));
@@ -32,6 +35,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const value = {
+        authType,
+        setAuthType,
         isLoggedIn,
         setIsLoggedIn,
         currentUser,
