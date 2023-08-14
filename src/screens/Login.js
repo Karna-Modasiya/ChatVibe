@@ -5,7 +5,7 @@ import Loader from '../components/Loader';
 import { Input } from '../components/Input';
 import Button from '../components/Button';
 import Colors from '../constants/Colors';
-import SocialLogin from '../components/SocialLogin';
+import SocialLogin from '../components/SocialAuthProvider';
 import auth from '@react-native-firebase/auth';
 import Background from '../components/Background';
 
@@ -37,25 +37,38 @@ const Login = ({ navigation }) => {
   const login = () => {
     setLoading(true);
     setTimeout(async () => {
-      appwrite
-        .login(inputs)
-        .then((response) => {
-          console.log(response);
-          if (response) {
-            setIsLoggedIn(true);
-            Snackbar.show({
-              text: 'Login Success',
-              duration: Snackbar.LENGTH_SHORT
+        auth()
+            .signInWithEmailAndPassword(inputs.email, inputs.password)
+            .then(() => {
+                setLoading(false);
+                console.log('User Logged In!');
             })
-          }
-        })
-        .catch(e => {
-          console.log(e);
-          setEmail('Incorrect email or password')
-        })
-        .finally(() => {
-          setLoading(false);
-        })
+            .catch(error => {
+                setLoading(false);
+                if (error.code === 'auth/wrong-password') {
+                    console.log('Incorrect Password!');
+                    Snackbar.show({
+                    text: 'Incorrect Password',
+                    duration: Snackbar.LENGTH_SHORT,
+                    })
+                }
+
+                if (error.code === 'auth/user-not-found') {
+                    Snackbar.show({
+                    text: 'User Not Found',
+                    duration: Snackbar.LENGTH_SHORT,
+                    })
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                    Snackbar.show({
+                        text: 'Invalid email',
+                        duration: Snackbar.LENGTH_SHORT,
+                    })
+                }
+
+                console.error(error);
+            });
     }, 2000);
   };
 

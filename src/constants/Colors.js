@@ -18,7 +18,7 @@ export default {
     light: '#F3F4FB',
     blue: blue,
     darkBlue: '#7978B5',
-    red: 'red',
+    red: '#DC3545',
     white: white,
     black: black,
 
