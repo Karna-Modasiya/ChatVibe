@@ -1,6 +1,8 @@
 import React from 'react';
 import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, } from 'react-native';
 import Colors from '../constants/Colors';
+import FontSize from '../constants/FontSize';
+import Background from '../components/Background';
 
 const { width, height } = Dimensions.get('window');
 
@@ -87,7 +89,7 @@ const OnboardingScreen = ({ navigation }) => {
               style={[
                 styles.indicator,
                 currentSlideIndex == index && {
-                  backgroundColor: Colors.darkText,
+                  backgroundColor: Colors.primary,
                   width: 25,
                 },
               ]}
@@ -102,7 +104,7 @@ const OnboardingScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => navigation.replace('Login')}>
-                <Text style={{ fontWeight: 'bold', fontSize: 15, color: Colors.lightText }}>
+                <Text style={{ fontWeight: 'bold', fontSize: FontSize.small, color: Colors.secondaryText }}>
                   GET STARTED
                 </Text>
               </TouchableOpacity>
@@ -114,7 +116,7 @@ const OnboardingScreen = ({ navigation }) => {
                 style={[
                   styles.btn,
                   {
-                    borderColor: Colors.darkText,
+                    borderColor: Colors.secondary,
                     borderWidth: 1,
                     backgroundColor: 'transparent',
                   },
@@ -123,8 +125,8 @@ const OnboardingScreen = ({ navigation }) => {
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    fontSize: 15,
-                    color: Colors.darkText,
+                    fontSize: FontSize.small,
+                    color: Colors.primaryText,
                   }}>
                   SKIP
                 </Text>
@@ -137,8 +139,8 @@ const OnboardingScreen = ({ navigation }) => {
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    fontSize: 15,
-                    color: Colors.lightText
+                    fontSize: FontSize.small,
+                    color: Colors.secondaryText
                   }}>
                   NEXT
                 </Text>
@@ -151,35 +153,37 @@ const OnboardingScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
-      <StatusBar backgroundColor={Colors.primary} />
-      <FlatList
-        ref={ref}
-        onMomentumScrollEnd={updateCurrentSlideIndex}
-        contentContainerStyle={{ height: height * 0.75 }}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={slides}
-        pagingEnabled
-        renderItem={({ item }) => <Slide item={item} />}
-      />
-      <Footer />
+    <SafeAreaView style={{ flex: 1}}>
+      <Background>
+        <StatusBar backgroundColor={Colors.transparent} />
+        <FlatList
+          ref={ref}
+          onMomentumScrollEnd={updateCurrentSlideIndex}
+          contentContainerStyle={{ height: height * 0.75 }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={slides}
+          pagingEnabled
+          renderItem={({ item }) => <Slide item={item} />}
+        />
+        <Footer />
+      </Background>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   subtitle: {
-    color: Colors.darkText,
-    fontSize: 13,
+    color: Colors.primaryText,
+    // fontSize: 13,
     marginTop: 10,
-    maxWidth: '70%',
+    maxWidth: '80%',
     textAlign: 'center',
     lineHeight: 23,
   },
   title: {
-    color: Colors.darkText,
-    fontSize: 22,
+    color: Colors.primaryText,
+    fontSize: 23,
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center',
@@ -200,7 +204,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     borderRadius: 5,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
