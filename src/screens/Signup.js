@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 import Loader from '../components/Loader';
 import { Input } from '../components/Input';
 import Button from '../components/Button';
-import SocialLogin from '../components/SocialLogin';
+import SocialLogin from '../components/SocialAuthProvider';
 import auth from '@react-native-firebase/auth';
 import { useAuth } from '../utils/AuthContext';
 import Background from '../components/Background';
@@ -25,7 +25,6 @@ const Signup = ({ navigation }) => {
   });
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-  const {setCurrentUser} = useAuth();
 
   const validate = () => {
     Keyboard.dismiss();
@@ -60,33 +59,33 @@ const Signup = ({ navigation }) => {
 
   const register = () => {
     setLoading(true);
-    auth()
-      .createUserWithEmailAndPassword(inputs.email, inputs.password)
-      .then(() => {
-        setLoading(false);
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        setLoading(false);
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-          Snackbar.show({
-            text: 'That email address is already in use!',
-            duration: Snackbar.LENGTH_SHORT,
-            backgroundColor: Colors.red
-          })
-        }
+    setTimeout(async () => {
+      auth()
+        .createUserWithEmailAndPassword(inputs.email, inputs.password)
+        .then(() => {
+          setLoading(false);
+          console.log('User account created & signed in!');
+        })
+        .catch(error => {
+          setLoading(false);
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use');
+            Snackbar.show({
+              text: 'That email address is already in use!',
+              duration: Snackbar.LENGTH_SHORT,
+            })
+          }
 
-        if (error.code === 'auth/invalid-email') {
-          Snackbar.show({
-            text: 'Invalid email!',
-            duration: Snackbar.LENGTH_SHORT,
-            backgroundColor: Colors.red
-          })
-        }
+          if (error.code === 'auth/invalid-email') {
+            Snackbar.show({
+              text: 'Invalid email',
+              duration: Snackbar.LENGTH_SHORT,
+            })
+          }
 
-        console.error(error);
-      });
+          console.error(error);
+        });
+    }, 2000);
   };
 
   const handleOnchange = (text, input) => {
