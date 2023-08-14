@@ -5,6 +5,7 @@ import Colors from '../../constants/Colors';
 //Routes
 import { AppStack } from '../routes/AppStack';
 import { AuthStack } from '../routes/AuthStack';
+import { useAuth } from '../../utils/AuthContext';
 
 const theme = {
     ...DefaultTheme,
@@ -15,7 +16,7 @@ const theme = {
   };
 
 export const Router = () => {
-    const [isLoggedIn,setIsLoggedIn] = useState(false);
+    const {isLoggedIn} = useAuth();
     return (
         <NavigationContainer theme={theme}>
             {isLoggedIn ? <AppStack /> : <AuthStack />}
