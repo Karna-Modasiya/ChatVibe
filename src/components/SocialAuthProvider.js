@@ -91,10 +91,9 @@ const SocialLogin = ({
         auth().signInWithCredential(facebookCredential)
             .then(() => {
                 setAuthType("facebook");
-                console.log('LOgged in using facebook');
+                console.log('Logged in using facebook');
             })
             .catch(error => {
-                setLoading(false);
                 if (error.code === 'auth/account-exists-with-different-credential') {
                     console.log('Account Already Exists');
                     Snackbar.show({
