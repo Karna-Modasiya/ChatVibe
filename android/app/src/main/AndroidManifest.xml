@@ -10,8 +10,13 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       >
+<<<<<<< HEAD
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string1/facebook_app_id"/>
       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string1/facebook_client_token"/>
+=======
+      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+      <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+>>>>>>> b6e630ff8b086ba6c44cf3d0804071ff78f07ccd
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
