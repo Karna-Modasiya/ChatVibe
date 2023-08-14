@@ -1,46 +1,36 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
-import { COLORS } from '../constants/Constants';
+import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, } from 'react-native';
+import Colors from '../constants/Colors';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const slides = [
   {
     id: '1',
-    image: require('../../assets/images/2.png'),
+    image: require('../assets/images/onBording_2.png'),
     title: 'Connect, Chat, and Share',
     subtitle: 'Your Ultimate Communication Hub',
   },
   {
     id: '2',
-    image: require('../../assets/images/1.png'),
+    image: require('../assets/images/onBording_1.png'),
     title: 'Stay Connected\nAnytime, Anywhere',
     subtitle: 'Chat at Your Fingertips',
   },
   {
     id: '3',
-    image: require('../../assets/images/5.png'),
+    image: require('../assets/images/onBording_5.png'),
     title: 'Empowering Conversations \nwith AI',
     subtitle: 'Unlocking the Potential of Intelligent Communication',
   },
 ];
 
-const Slide = ({item}) => {
+const Slide = ({ item }) => {
   return (
-    <View style={{alignItems: 'center',width: width,flex:1,justifyContent:'center',alignItems: 'center'}}>
+    <View style={{ alignItems: 'center', width: width, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Image
         source={item?.image}
-        style={{height: '75%', width: width*0.9, resizeMode:'contain'}}
+        style={{ height: '75%', width: width * 0.9, resizeMode: 'contain' }}
       />
       <View>
         <Text style={styles.title}>{item?.title}</Text>
@@ -50,7 +40,7 @@ const Slide = ({item}) => {
   );
 };
 
-const OnboardingScreen = ({navigation}) => {
+const OnboardingScreen = ({ navigation }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef();
   const updateCurrentSlideIndex = e => {
@@ -63,7 +53,7 @@ const OnboardingScreen = ({navigation}) => {
     const nextSlideIndex = currentSlideIndex + 1;
     if (nextSlideIndex != slides.length) {
       const offset = nextSlideIndex * width;
-      ref?.current.scrollToOffset({offset});
+      ref?.current.scrollToOffset({ offset });
       setCurrentSlideIndex(currentSlideIndex + 1);
     }
   };
@@ -71,7 +61,7 @@ const OnboardingScreen = ({navigation}) => {
   const skip = () => {
     const lastSlideIndex = slides.length - 1;
     const offset = lastSlideIndex * width;
-    ref?.current.scrollToOffset({offset});
+    ref?.current.scrollToOffset({ offset });
     setCurrentSlideIndex(lastSlideIndex);
   };
 
@@ -97,7 +87,7 @@ const OnboardingScreen = ({navigation}) => {
               style={[
                 styles.indicator,
                 currentSlideIndex == index && {
-                  backgroundColor: COLORS.text,
+                  backgroundColor: Colors.darkText,
                   width: 25,
                 },
               ]}
@@ -106,25 +96,25 @@ const OnboardingScreen = ({navigation}) => {
         </View>
 
         {/* Render buttons */}
-        <View style={{marginBottom: 20}}>
+        <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slides.length - 1 ? (
-            <View style={{height: 50}}>
+            <View style={{ height: 50 }}>
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => navigation.replace('Login')}>
-                <Text style={{fontWeight: 'bold', fontSize: 15,color: COLORS.primary}}>
+                <Text style={{ fontWeight: 'bold', fontSize: 15, color: Colors.lightText }}>
                   GET STARTED
                 </Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={[
                   styles.btn,
                   {
-                    borderColor: COLORS.text,
+                    borderColor: Colors.darkText,
                     borderWidth: 1,
                     backgroundColor: 'transparent',
                   },
@@ -134,12 +124,12 @@ const OnboardingScreen = ({navigation}) => {
                   style={{
                     fontWeight: 'bold',
                     fontSize: 15,
-                    color: COLORS.text,
+                    color: Colors.darkText,
                   }}>
                   SKIP
                 </Text>
               </TouchableOpacity>
-              <View style={{width: 15}} />
+              <View style={{ width: 15 }} />
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={goToNextSlide}
@@ -148,7 +138,7 @@ const OnboardingScreen = ({navigation}) => {
                   style={{
                     fontWeight: 'bold',
                     fontSize: 15,
-                    color: COLORS.primary
+                    color: Colors.lightText
                   }}>
                   NEXT
                 </Text>
@@ -161,17 +151,17 @@ const OnboardingScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.primary}}>
-      <StatusBar backgroundColor={COLORS.primary} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
+      <StatusBar backgroundColor={Colors.primary} />
       <FlatList
         ref={ref}
         onMomentumScrollEnd={updateCurrentSlideIndex}
-        contentContainerStyle={{height: height * 0.75}}
+        contentContainerStyle={{ height: height * 0.75 }}
         showsHorizontalScrollIndicator={false}
         horizontal
         data={slides}
         pagingEnabled
-        renderItem={({item}) => <Slide item={item} />}
+        renderItem={({ item }) => <Slide item={item} />}
       />
       <Footer />
     </SafeAreaView>
@@ -180,7 +170,7 @@ const OnboardingScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   subtitle: {
-    color: COLORS.text,
+    color: Colors.darkText,
     fontSize: 13,
     marginTop: 10,
     maxWidth: '70%',
@@ -188,7 +178,7 @@ const styles = StyleSheet.create({
     lineHeight: 23,
   },
   title: {
-    color: COLORS.text,
+    color: Colors.darkText,
     fontSize: 22,
     fontWeight: 'bold',
     marginTop: 20,
@@ -210,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     borderRadius: 5,
-    backgroundColor: COLORS.text,
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
